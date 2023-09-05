@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Lab 3</title>
+    <style>
+      * {
+        background-color: cornflowerblue;
+        text-align: center;
+        margin-top: 3%;
+      }
+
+      h1 {
+        font-size: xxx-large;
+      }
+
+      label {
+        font-size: xx-large;
+      }
+
+      input {
+        font-size: xx-large;
+      }
+
+      button {
+        font-size: xx-large;
+      }
+
+      div {
+        font-size: x-large;
+      }
+
+      p {
+        font-size: xx-large;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Register</h1>
+    <form action="register.php" method="post" id="register_form">
+      <label for="username" >Username: </label>
+      <input name="username" id="username" type="text" required><br>
+      <label for="password">Password: </label>
+      <input name="password" id="password" type="password" required><br><br>
+      <div id="message">
+      </div>
+      <button type="submit">Register</button>
+    </form>
+    <p>Click <a href="index.html">here</a> to go back to login page</p>
+  <script>
+
+    document.getElementById("register_form").addEventListener('submit', function(event) {
+
+      event.preventDefault();
+
+      let formData = new FormData(this);
+
+      fetch('register.php', {
+        method: 'POST',
+        body: formData
+      })
+              .then(response => response.text())
+              .then(data => {
+                document.getElementById('message').innerHTML = data;
+                document.getElementById('username').value = '';
+                document.getElementById('password').value = '';
+              })
+    });
+
+  </script>
+  </body>
+</html>

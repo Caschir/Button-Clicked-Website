@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <title>Lab 3</title>
+      <style>
+          * {
+             background-color: cornflowerblue;
+              text-align: center;
+              margin-top: 3%;
+          }
+
+          p {
+              font-size: 64px;
+          }
+
+          button {
+              font-size: xx-large;
+          }
+      </style>
+  </head>
+  <body>
+    <p id="username"></p>
+    <p>Count:</p>
+    <p id="count"></p>
+    <button id="countButton" name="countButton">Press</button>
+    <button id="logoutButton" onclick="logoutButton()">Log Out</button>
+  </body>
+  <script>
+
+      document.getElementById("logoutButton").addEventListener("click", function() {
+          let xhr = new XMLHttpRequest();
+          xhr.open('POST', 'count.php', true);
+          xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+          xhr.onload = function() {
+              if (xhr.status === 200) {
+                  window.location.href = "index.html";
+              }
+          };
+          xhr.send('logout=true');
+      });
+
+      window.onload = function() {
+          let xhr = new XMLHttpRequest();
+          xhr.open('GET', 'count.php', true);
+
+          xhr.onload = function() {
+              if (xhr.status === 200) {
+                  document.getElementById("username").innerHTML = xhr.responseText.split(' ')[0];
+                  document.getElementById("count").innerHTML = xhr.responseText.split(' ')[1];
+              }
+          };
+          xhr.send();
+      }
+
+      document.getElementById("countButton").addEventListener("click", function() {
+          let xhr = new XMLHttpRequest();
+          xhr.open('POST', 'count.php', true);
+          xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+          xhr.onload = function() {
+              if (xhr.status === 200) {
+                  document.getElementById('count').innerHTML = xhr.responseText.split(' ')[2];
+              }
+          };
+          xhr.send('update=true');
+      });
+
+  </script>
+</html>

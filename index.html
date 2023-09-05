@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+    <head>
+        <meta charset="UTF-8">
+        <title>Lab 3</title>
+        <style>
+            * {
+                background-color: cornflowerblue;
+                text-align: center;
+                margin-top: 3%;
+            }
+
+            h1 {
+                font-size: xxx-large;
+            }
+
+            label {
+                font-size: xx-large;
+            }
+
+            input {
+                font-size: xx-large;
+            }
+
+            button {
+                font-size: xx-large;
+            }
+
+            div {
+                font-size: x-large;
+            }
+
+            p {
+                font-size: xx-large;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Login</h1>
+        <form action="login.php" method="post" id="login_form">
+            <label for="username" >Username: </label>
+            <input name="username" id="username" type="text" required><br>
+            <label for="password" >Password: </label>
+            <input name="password" id="password" type="password" required><br><br>
+            <div id="message">
+            </div>
+            <button type="submit">Login</button>
+            <p>Not a user? click <a href="register.html">here</a> to register!</p>
+        </form>
+    </body>
+    <script>
+        document.getElementById("login_form").addEventListener('submit', function(event) {
+
+            event.preventDefault();
+
+            let formData = new FormData(this);
+
+            fetch('login.php', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.text())
+                .then(data => {
+                    if (data.trim() === "success"){
+                        window.location.href = "count.html";
+                    }else {
+                        document.getElementById('message').innerHTML = data;
+                        document.getElementById('username').value = '';
+                        document.getElementById('password').value = '';
+                    }
+                })
+        });
+    </script>
+</html>
